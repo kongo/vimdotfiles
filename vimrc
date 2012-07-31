@@ -61,6 +61,8 @@ map <leader>tl :tablast<cr>
 map <leader>tm :tabmove
 
 map <F8> :NERDTreeToggle<cr>
+map <F7> :NERDTreeFocus<cr>
+map <F6> :NERDTreeFind<cr>
 
 " Controversial...swap colon and semicolon for easier commands
 "nnoremap ; :
