@@ -56,20 +56,20 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-s> :w<cr>
 
-" Tab mappings.
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tm :tabmove
-
 map <F8> :NERDTreeToggle<cr>
-map <F7> :NERDTreeFocus<cr>
-map <F6> :NERDTreeFind<cr>
+nmap <F7> :TagbarToggle<CR>
+
+nnoremap <F5> :buffers<CR>:buffer<Space>
+
+map <F2> :w<CR><Esc>
+nnoremap <F3> :NERDTreeFind<CR><c-w><c-w>
+
+function SyncTree()
+  if bufwinnr(t:NERDTreeBufName) != -1
+    exe "normal! :NERDTreeFind\<cr>\<c-w>\<c-w>"
+  endif
+endfunction
+"autocmd BufEnter * call SyncTree()
 
 " Controversial...swap colon and semicolon for easier commands
 "nnoremap ; :
