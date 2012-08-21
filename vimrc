@@ -37,6 +37,8 @@ set nobackup                      " Don't make a backup before overwriting a fil
 set nowritebackup                 " And again.
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
+set history=1000
+
 set t_Co=256
 colorscheme darkspectrum
 set background=dark
@@ -56,28 +58,10 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-s> :w<cr>
 
-map <F8> :NERDTreeToggle<cr>
+map <F8> :NERDTreeToggle<cr><c-w>l<cr>
 nmap <F7> :TagbarToggle<CR>
 
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
 map <F2> :w<CR><Esc>
-nnoremap <F3> :NERDTreeFind<CR><c-w><c-w>
-
-function SyncTree()
-  if bufwinnr(t:NERDTreeBufName) != -1
-    exe "normal! :NERDTreeFind\<cr>\<c-w>\<c-w>"
-  endif
-endfunction
-"autocmd BufEnter * call SyncTree()
-
-" Controversial...swap colon and semicolon for easier commands
-"nnoremap ; :
-"nnoremap : ;
-
-"vnoremap ; :
-"vnoremap : ;
-
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+nnoremap <F3> :NERDTreeFind<CR><c-w>l
