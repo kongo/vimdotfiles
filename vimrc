@@ -37,6 +37,8 @@ set nobackup                      " Don't make a backup before overwriting a fil
 set nowritebackup                 " And again.
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
+set history=1000
+
 set t_Co=256
 colorscheme darkspectrum
 set background=dark
@@ -48,7 +50,7 @@ set expandtab                    " Use spaces instead of tabs
 
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c,%L\ %)%P
 
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -56,28 +58,12 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-s> :w<cr>
 
-map <F8> :NERDTreeToggle<cr>
-nmap <F7> :TagbarToggle<CR>
+noremap <C-down> :bprev<CR> 
+noremap <C-up> :bnext<CR> 
+
+noremap <F8> :TagbarToggle<CR>
 
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
-map <F2> :w<CR><Esc>
-nnoremap <F3> :NERDTreeFind<CR><c-w><c-w>
-
-function SyncTree()
-  if bufwinnr(t:NERDTreeBufName) != -1
-    exe "normal! :NERDTreeFind\<cr>\<c-w>\<c-w>"
-  endif
-endfunction
-"autocmd BufEnter * call SyncTree()
-
-" Controversial...swap colon and semicolon for easier commands
-"nnoremap ; :
-"nnoremap : ;
-
-"vnoremap ; :
-"vnoremap : ;
-
-" Automatic fold settings for specific files. Uncomment to use.
-" autocmd FileType ruby setlocal foldmethod=syntax
-" autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+nnoremap <F2> :w<CR><Esc>
+nnoremap <F3> :NERDTreeFind<cr>
