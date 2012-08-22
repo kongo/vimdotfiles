@@ -50,7 +50,7 @@ set expandtab                    " Use spaces instead of tabs
 
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c,%L\ %)%P
 
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -58,10 +58,12 @@ nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 nnoremap <c-s> :w<cr>
 
-map <F8> :NERDTreeToggle<cr><c-w>l<cr>
-nmap <F7> :TagbarToggle<CR>
+noremap <C-down> :bprev<CR> 
+noremap <C-up> :bnext<CR> 
+
+noremap <F8> :TagbarToggle<CR>
 
 nnoremap <F5> :buffers<CR>:buffer<Space>
 
-map <F2> :w<CR><Esc>
-nnoremap <F3> :NERDTreeFind<CR><c-w>l
+nnoremap <F2> :w<CR><Esc>
+nnoremap <F3> :NERDTreeFind<cr>
