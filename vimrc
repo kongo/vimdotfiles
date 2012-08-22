@@ -1,8 +1,11 @@
 " Example Vim configuration.
 " Copy or symlink to ~/.vimrc or ~/_vimrc.
 
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 call pathogen#infect()
 set nocompatible                  " Must come first because it changes other options.
+
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 syntax enable                     " Turn on syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
@@ -51,6 +54,7 @@ set expandtab                    " Use spaces instead of tabs
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c,%L\ %)%P
+
 
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
