@@ -63,7 +63,7 @@ noremap <C-up> :bnext<CR>
 
 noremap <F8> :TagbarToggle<CR>
 
-nnoremap <F5> :buffers<CR>:buffer<Space>
+nmap <F5> <Esc>:BufExplorer<cr>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <F3> :NERDTreeFind<cr>
