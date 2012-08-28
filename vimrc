@@ -1,7 +1,6 @@
 " Example Vim configuration.
 " Copy or symlink to ~/.vimrc or ~/_vimrc.
 
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 call pathogen#infect()
 set nocompatible                  " Must come first because it changes other options.
 
@@ -71,3 +70,5 @@ nmap <F5> <Esc>:BufExplorer<cr>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <F3> :NERDTreeFind<cr>
+
+autocmd BufLeave * silent! wall
