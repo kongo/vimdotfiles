@@ -4,7 +4,10 @@
 call pathogen#infect()
 set nocompatible                  " Must come first because it changes other options.
 
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_working_path_mode = ''
 
 syntax enable                     " Turn on syntax highlighting.
 filetype plugin indent on         " Turn on file type detection.
@@ -40,6 +43,8 @@ set nowritebackup                 " And again.
 set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
 
 set history=1000
+
+set updatetime=100
 
 set t_Co=256
 colorscheme darkspectrum
