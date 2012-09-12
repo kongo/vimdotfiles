@@ -5,6 +5,8 @@ call pathogen#infect()
 set nocompatible                  " Must come first because it changes other options.
 
 let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
+let Grep_Default_Options='-i'
+let Grep_Skip_Dirs='tmp log'
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_working_path_mode = ''
