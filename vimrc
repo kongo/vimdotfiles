@@ -49,8 +49,8 @@ set history=1000
 set updatetime=100
 
 set t_Co=256
-colorscheme darkspectrum
-set background=dark
+colorscheme aldmeris
+set background=light
 
 " UNCOMMENT TO USE
 set tabstop=2                    " Global tab width.
@@ -74,8 +74,12 @@ noremap <C-up> :bnext<CR>
 noremap <F8> :TagbarToggle<CR>
 
 nmap <F5> <Esc>:BufExplorer<cr>
+nmap <silent> <C-i> :LustyJuggler<CR>
 
 nnoremap <F2> :w<CR><Esc>
-nnoremap <F3> :NERDTreeFind<cr>
+nnoremap <silent> <F3> :NERDTreeFind<cr>
+
+nmap <C-S-f> :Rgrep<Space>
 
 autocmd BufLeave * silent! wall
+au BufRead,BufNewFile *.hamlc set ft=haml
