@@ -74,12 +74,15 @@ noremap <C-up> :bnext<CR>
 noremap <F8> :TagbarToggle<CR>
 
 nmap <F5> <Esc>:BufExplorer<cr>
-nmap <silent> <C-i> :LustyJuggler<CR>
+nmap <silent> <C-n> :LustyJuggler<CR>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F3> :NERDTreeFind<cr>
+nnoremap <silent> <F7> :NERDTreeToggle<cr>
 
+map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
+imap <C-Space> <C-n>
 
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
