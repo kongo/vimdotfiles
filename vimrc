@@ -83,6 +83,7 @@ nnoremap <silent> <F7> :NERDTreeToggle<cr>
 map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
 imap <C-Space> <C-n>
+vmap d "_x
 
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
