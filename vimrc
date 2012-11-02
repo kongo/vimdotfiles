@@ -78,6 +78,7 @@ nmap <silent> <C-i> :LustyJuggler<CR>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F3> :NERDTreeFind<cr>
+nnoremap <silent> <F7> :NERDTreeToggle<cr>
 
 nmap <C-S-f> :Rgrep<Space>
 
