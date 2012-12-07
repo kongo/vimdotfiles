@@ -50,7 +50,7 @@ set updatetime=100
 
 set t_Co=256
 colorscheme aldmeris
-set background=light
+set background=dark
 
 " UNCOMMENT TO USE
 set tabstop=2                    " Global tab width.
@@ -70,20 +70,53 @@ nnoremap <c-s> :w<cr>
 
 noremap <C-down> :bprev<CR> 
 noremap <C-up> :bnext<CR> 
+noremap <C-S-Tab> :bprev<CR> 
+noremap <C-Tab> :bnext<CR> 
 
 noremap <F8> :TagbarToggle<CR>
 
-nmap <F5> <Esc>:BufExplorer<cr>
-nmap <silent> <C-n> :LustyJuggler<CR>
+nmap <silent> <F5> <Esc>:BufExplorer<cr>
+nmap <silent> <C-b> :LustyJuggler<CR>
+nmap <silent> <C-n> :noh<CR>
 
 nnoremap <F2> :w<CR><Esc>
-nnoremap <silent> <F3> :NERDTreeFind<cr>
+nnoremap <silent> <F6> :NERDTreeFind<cr>
 nnoremap <silent> <F7> :NERDTreeToggle<cr>
+
 
 map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
+
+" autocomplete on C-Space
 imap <C-Space> <C-n>
+
+" in visual mode d deletes without putting to a buffer
 vmap d "_x
+
+" in visual mode don't remove selection after indenting lines
+vmap > >gv
+vmap < <gv
+
+" map <F3> and <S-F3> to jump between locations in a quickfix list, or
+" " differences if in window in diff mode
+nnoremap <expr> <silent> <F3>   (&diff ? "]c" : ":cnext\<CR>")
+nnoremap <expr> <silent> <S-F3> (&diff ? "[c" : ":cprev\<CR>")
+
+" Space is easier way to get to the command line
+nnoremap <Space> :
+
+" in insert mode ctrl+backspace deletes previous word
+imap <C-BS> <C-W>
+
+" in normal mode Enter inserts a blank line under cursor
+nnoremap <CR> m`o<Esc>``
+
+" in normal mode S-Enter inserts a blank line above cursor
+nnoremap <S-Enter> m`O<Esc>``
+
+" in normal mode C-Enter inserts a new line (emulating Enter keypress) and
+" goes to that line
+nnoremap <C-CR> <Esc>A<CR>
 
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
