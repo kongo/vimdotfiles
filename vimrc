@@ -114,9 +114,9 @@ nnoremap <CR> m`o<Esc>``
 " in normal mode S-Enter inserts a blank line above cursor
 nnoremap <S-Enter> m`O<Esc>``
 
-" in normal mode C-Enter inserts a new line (emulating Enter keypress) and
+" in insert mode C-Enter inserts a new line (emulating Enter keypress) and
 " goes to that line
-nnoremap <C-CR> <Esc>A<CR>
+imap <C-CR> <Esc>A<CR>
 
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
