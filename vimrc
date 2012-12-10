@@ -2,6 +2,7 @@
 " Copy or symlink to ~/.vimrc or ~/_vimrc.
 
 call pathogen#infect()
+
 set nocompatible                  " Must come first because it changes other options.
 
 let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
@@ -42,11 +43,16 @@ set visualbell                    " No beeping.
 
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
-set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
+set directory=$HOME/.vim/tmp//,.    " Keep swap files in one location
 
 set history=1000
 
 set updatetime=100
+
+" allow folding but don't fold everything by default
+set foldlevel=99
+set foldenable
+set foldmethod=syntax
 
 set t_Co=256
 colorscheme aldmeris
@@ -83,6 +89,7 @@ nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F6> :NERDTreeFind<cr>
 nnoremap <silent> <F7> :NERDTreeToggle<cr>
 
+nmap <C-A> za
 
 map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
