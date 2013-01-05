@@ -46,7 +46,7 @@ set nowritebackup                 " And again.
 set directory=$HOME/.vim/tmp//,.    " Keep swap files in one location
 
 set history=1000
-
+set autoread
 set updatetime=100
 
 " allow folding but don't fold everything by default
@@ -55,7 +55,7 @@ set foldenable
 set foldmethod=syntax
 
 set t_Co=256
-colorscheme aldmeris
+colorscheme level28
 set background=dark
 
 " UNCOMMENT TO USE
@@ -65,9 +65,12 @@ set expandtab                    " Use spaces instead of tabs
 
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c,%L\ %)%P
+set statusline=\ %f%m%r%h%w\ %=\ %{v:register}\ \ %([\ Line:%l\/%L\ \ Column:%v\ ]\ \ [\ %p%%\ ]\ %)
 
 set cursorline
+
+set winheight=30
+set winwidth=80
 
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -80,10 +83,11 @@ noremap <C-up> :bnext<CR>
 noremap <C-S-Tab> :bprev<CR> 
 noremap <C-Tab> :bnext<CR> 
 
-noremap <F8> :TagbarToggle<CR>
+noremap <F8> :TagbarOpenAutoClose<CR>gg/
 
 nmap <silent> <F5> <Esc>:BufExplorer<cr>
-nmap <silent> <C-b> :LustyJuggler<CR>
+nmap <silent> <C-b> :BufExplorer<CR>
+" nmap <silent> <C-b> :LustyJuggler<CR>
 nmap <silent> <C-n> :noh<CR>
 
 nnoremap <F2> :w<CR><Esc>
@@ -98,8 +102,11 @@ nmap <C-S-f> :Rgrep<Space>
 " autocomplete on C-Space
 imap <C-Space> <C-n>
 
+" useful to jump out of supplemented parenthesis or brackets
+imap <C-L> <End>
+
 " in visual mode d deletes without putting to a buffer
-vmap d "_x
+" vmap d "_x
 
 " in visual mode don't remove selection after indenting lines
 vmap > >gv
@@ -112,19 +119,61 @@ nnoremap <expr> <silent> <S-F3> (&diff ? "[c" : ":cprev\<CR>")
 
 " Space is easier way to get to the command line
 nnoremap <Space> :
+vnoremap <Space> :
 
 " in insert mode ctrl+backspace deletes previous word
 imap <C-BS> <C-W>
 
 " in normal mode Enter inserts a blank line under cursor
-nnoremap <CR> m`o<Esc>``
+nnoremap <C-CR> m`o<Esc>``
 
 " in normal mode S-Enter inserts a blank line above cursor
-nnoremap <S-Enter> m`O<Esc>``
+nnoremap <S-CR> m`O<Esc>``
 
 " in insert mode C-Enter inserts a new line (emulating Enter keypress) and
 " goes to that line
 imap <C-CR> <Esc>A<CR>
 
+map <C-Z> za
+
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
+
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), "file")
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+
+"visual search mappings
+function! s:VSetSearch()
+  let temp = @@
+  norm! gvy
+  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
+  let @@ = temp
+endfunction
+
+vnoremap * :<C-u>call <SID>VSetSearch()<CR>//<CR>
+vnoremap # :<C-u>call <SID>VSetSearch()<CR>??<CR>
+
+function! NERDTreeWinNum()
+  if exists("t:NERDTreeBufName")
+    return bufwinnr(t:NERDTreeBufName)
+  else
+    return -1
+  endif
+endfunction
+
+function! SyncTree()
+  if NERDTreeWinNum() != -1
+    exec ":NERDTreeFind"
+    :normal! <CR>
+  endif
+endfunction
+" autocmd BufEnter * call SyncTree()
+map <C-c> :<C-u>call SyncTree()<CR>
