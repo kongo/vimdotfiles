@@ -43,6 +43,7 @@ set visualbell                    " No beeping.
 
 set nobackup                      " Don't make a backup before overwriting a file.
 set nowritebackup                 " And again.
+set noswapfile
 set directory=$HOME/.vim/tmp//,.    " Keep swap files in one location
 
 set history=1000
@@ -58,14 +59,13 @@ set t_Co=256
 colorscheme level28
 set background=dark
 
-" UNCOMMENT TO USE
 set tabstop=2                    " Global tab width.
 set shiftwidth=2                 " And again, related.
 set expandtab                    " Use spaces instead of tabs
 
 set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
-set statusline=\ %f%m%r%h%w\ %=\ %{v:register}\ \ %([\ Line:%l\/%L\ \ Column:%v\ ]\ \ [\ %p%%\ ]\ %)
+set statusline=\ %f%m%r%h%w\ \ \ %{fugitive#statusline()}%=\ %{v:register}\ \ %([\ Line:%l\/%L\ \ Column:%v\ ]\ \ [\ %p%%\ ]\ %)
 
 set cursorline
 
@@ -87,7 +87,6 @@ noremap <F8> :TagbarOpenAutoClose<CR>gg/
 
 nmap <silent> <F5> <Esc>:BufExplorer<cr>
 nmap <silent> <C-b> :BufExplorer<CR>
-" nmap <silent> <C-b> :LustyJuggler<CR>
 nmap <silent> <C-n> :noh<CR>
 
 nnoremap <F2> :w<CR><Esc>
@@ -177,3 +176,11 @@ function! SyncTree()
 endfunction
 " autocmd BufEnter * call SyncTree()
 map <C-c> :<C-u>call SyncTree()<CR>
+
+" Edit vimrc
+map <Leader>ev :e $MYVIMRC<CR>
+" Source vimrc
+map <Leader>sv :source $MYVIMRC<CR>
+
+" Unfold all foldings
+map <Leader>uf :set foldlevel=99<CR>
