@@ -152,7 +152,7 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <leader>n :call RenameFile()<cr>
+map <leader>r :call RenameFile()<cr>
 
 "visual search mappings
 function! s:VSetSearch()
@@ -189,3 +189,8 @@ map <Leader>sv :source $MYVIMRC<CR>
 
 " Unfold all foldings
 map <Leader>uf :set foldlevel=99<CR>
+
+map <Leader>bd :bd<CR>
+
+imap jj <Esc>
+vmap jj <Esc>
