@@ -180,7 +180,7 @@ function! SyncTree()
   endif
 endfunction
 " autocmd BufEnter * call SyncTree()
-map <C-c> :<C-u>call SyncTree()<CR>
+" map <C-c> :<C-u>call SyncTree()<CR>
 
 " Edit vimrc
 map <Leader>ev :e $MYVIMRC<CR>
@@ -193,4 +193,12 @@ map <Leader>uf :set foldlevel=99<CR>
 map <Leader>bd :bd<CR>
 
 imap jj <Esc>
-vmap jj <Esc>
+
+vmap <C-Insert> "+y
+nmap <C-Insert> "+y
+nmap <S-Insert> "+P
+
+function! EscapeSelectionToXReg()
+  let @x = escape(@*, ' .()[]^+*?\')
+endfunction
+vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
