@@ -143,6 +143,8 @@ imap <C-CR> <Esc>A<CR>
 
 map <C-Z> za
 
+nmap Y y$
+
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
 
@@ -205,3 +207,4 @@ function! EscapeSelectionToXReg()
   let @x = escape(@*, ' .()[]^+*?\')
 endfunction
 vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
+
