@@ -102,6 +102,7 @@ nmap <C-A> za
 
 map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
+vmap <C-S-f> <Backspace><Backspace><Backspace><Backspace>:Rgrep<Space><C-R>*
 
 " autocomplete on C-Space
 imap <C-Space> <C-n>
@@ -173,15 +174,6 @@ function! NERDTreeWinNum()
   endif
 endfunction
 
-function! SyncTree()
-  if NERDTreeWinNum() != -1
-    exec ":NERDTreeFind"
-    :normal! <CR>
-  endif
-endfunction
-" autocmd BufEnter * call SyncTree()
-map <C-c> :<C-u>call SyncTree()<CR>
-
 " Edit vimrc
 map <Leader>ev :e $MYVIMRC<CR>
 " Source vimrc
@@ -193,4 +185,10 @@ map <Leader>uf :set foldlevel=99<CR>
 map <Leader>bd :bd<CR>
 
 imap jj <Esc>
-vmap jj <Esc>
+
+nmap <silent> <C-W> :bd<CR>
+
+" continious windows
+noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+source ~/.vim/bundle/snipmate-snippets/support_functions.vim
