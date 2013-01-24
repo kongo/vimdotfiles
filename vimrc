@@ -77,6 +77,9 @@ set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
 
+" Connect the default register with the system clipboard
+set clipboard=unnamedplus
+
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
@@ -102,7 +105,6 @@ nmap <C-A> za
 
 map <silent> <C-\> :TComment<cr>
 nmap <C-S-f> :Rgrep<Space>
-vmap <C-S-f> <Backspace><Backspace><Backspace><Backspace>:Rgrep<Space><C-R>*
 
 " autocomplete on C-Space
 imap <C-Space> <C-n>
@@ -141,6 +143,8 @@ imap <C-CR> <Esc>A<CR>
 
 map <C-Z> za
 
+nmap Y y$
+
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
 
@@ -174,6 +178,15 @@ function! NERDTreeWinNum()
   endif
 endfunction
 
+function! SyncTree()
+  if NERDTreeWinNum() != -1
+    exec ":NERDTreeFind"
+    :normal! <CR>
+  endif
+endfunction
+" autocmd BufEnter * call SyncTree()
+map <C-c> :<C-u>call SyncTree()<CR>
+
 " Edit vimrc
 map <Leader>ev :e $MYVIMRC<CR>
 " Source vimrc
@@ -186,9 +199,17 @@ map <Leader>bd :bd<CR>
 
 imap jj <Esc>
 
-nmap <silent> <C-W> :bd<CR>
+vmap <C-Insert> "+y
+nmap <C-Insert> "+y
+nmap <S-Insert> "+P
 
 " continious windows
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+function! EscapeSelectionToXReg()
+  let @x = escape(@*, ' .()[]^+*?\')
+endfunction
+vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
+
 
 source ~/.vim/bundle/snipmate-snippets/support_functions.vim
