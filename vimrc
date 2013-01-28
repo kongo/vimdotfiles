@@ -4,6 +4,8 @@
 call pathogen#infect()
 call pathogen#helptags()
 
+source ~/.vim/bundle/snipmate-snippets/support_functions.vim
+
 set nocompatible                  " Must come first because it changes other options.
 
 let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
@@ -195,6 +197,9 @@ vmap <C-Insert> "+y
 nmap <C-Insert> "+y
 nmap <S-Insert> "+P
 
+" continious windows
+noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
 function! Strip(input_string)
   return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
 endfunction
@@ -203,6 +208,7 @@ function! EscapeSelectionToXReg()
   let @x = escape(Strip(@*), ' .()[]^+*?\')
 endfunction
 vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
+
 
 " returns true if is NERDTree open/active
 function! rc:isNTOpen()
@@ -222,6 +228,3 @@ function! rc:syncTree()
 endfunction
 autocmd BufEnter * call rc:syncTree()
 
-
-" map <Leader>gt :!ctags -R .<CR>
-" inoremap <c-]> <c-x><c-]>
