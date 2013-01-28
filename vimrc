@@ -2,6 +2,7 @@
 " Copy or symlink to ~/.vimrc or ~/_vimrc.
 
 call pathogen#infect()
+call pathogen#helptags()
 
 set nocompatible                  " Must come first because it changes other options.
 
@@ -178,15 +179,6 @@ function! NERDTreeWinNum()
   endif
 endfunction
 
-function! SyncTree()
-  if NERDTreeWinNum() != -1
-    exec ":NERDTreeFind"
-    :normal! <CR>
-  endif
-endfunction
-" autocmd BufEnter * call SyncTree()
-" map <C-c> :<C-u>call SyncTree()<CR>
-
 " Edit vimrc
 map <Leader>ev :e $MYVIMRC<CR>
 " Source vimrc
@@ -203,8 +195,33 @@ vmap <C-Insert> "+y
 nmap <C-Insert> "+y
 nmap <S-Insert> "+P
 
+function! Strip(input_string)
+  return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
 function! EscapeSelectionToXReg()
-  let @x = escape(@*, ' .()[]^+*?\')
+  let @x = escape(Strip(@*), ' .()[]^+*?\')
 endfunction
 vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
 
+" returns true if is NERDTree open/active
+function! rc:isNTOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" returns true if focused window is NERDTree window
+function! rc:isNTFocused()
+  return -1 != match(expand('%'), 'NERD_Tree')
+endfunction
+
+function! rc:syncTree()
+  if &modifiable && rc:isNTOpen() && !rc:isNTFocused() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+autocmd BufEnter * call rc:syncTree()
+
+
+" map <Leader>gt :!ctags -R .<CR>
+" inoremap <c-]> <c-x><c-]>
