@@ -197,6 +197,14 @@ vmap <C-Insert> "+y
 nmap <C-Insert> "+y
 nmap <S-Insert> "+P
 
+map <M-[> [m
+map <M-]> ]m
+
+map <M-p> :tag 
+map <M-c> :bd<CR>
+
+map <Leader>er :e config/routes.rb<CR>
+
 " continious windows
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
@@ -228,3 +236,4 @@ function! rc:syncTree()
 endfunction
 autocmd BufEnter * call rc:syncTree()
 
+let g:syntastic_enable_signs=1
