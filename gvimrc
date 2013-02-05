@@ -5,6 +5,7 @@ set guifont=DejaVu\ Sans\ Mono\ 10            " Font family and font size.
 set encoding=utf-8                " Use UTF-8 everywhere.
 set guioptions-=T                 " Hide toolbar.
 set guioptions+=c                 " Use console dialogs
+set guioptions+=m                 " Hide menu.
 set background=dark               " Background.
 "set lines=25 columns=100          " Window dimensions.
 colorscheme level28
