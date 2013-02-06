@@ -3,3 +3,4 @@ bundle/command-t/ruby/command-t/Makefile
 bundle/command-t/ruby/command-t/ext.so
 bundle/command-t/ruby/command-t/mkmf.log
 .netrwhist
+undo/*
