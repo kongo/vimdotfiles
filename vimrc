@@ -98,7 +98,7 @@ noremap <F8> :TagbarOpenAutoClose<CR>gg/
 
 nmap <silent> <F5> <Esc>:BufExplorer<cr>
 nmap <silent> <C-b> :BufExplorer<CR>
-nmap <silent> <C-n> :noh<CR>
+nmap <silent> <C-m> :noh<CR>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F6> :NERDTreeFind<cr>
@@ -190,8 +190,6 @@ map <Leader>sv :source $MYVIMRC<CR>
 map <Leader>uf :set foldlevel=99<CR>
 
 map <Leader>bd :bd<CR>
-
-imap jj <Esc>
 
 vmap <C-Insert> "+y
 nmap <C-Insert> "+y
