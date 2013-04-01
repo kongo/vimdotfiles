@@ -447,6 +447,7 @@ function! s:RunGrepCmd(cmd, pattern, action)
     endif
 
     call delete(tmpfile)
+    execute 'normal /' . a:pattern . "\<CR>"
 endfunction
 
 " RunGrepRecursive()
