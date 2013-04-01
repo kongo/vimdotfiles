@@ -70,7 +70,7 @@ set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=\ %f%m%r%h%w\ \ \ %{fugitive#statusline()}%=\ %{v:register}\ \ %([\ Line:%l\/%L\ \ Column:%v\ ]\ \ [\ %p%%\ ]\ %)
 
-set cursorline
+" set cursorline
 
 set winheight=30
 set winwidth=80
@@ -91,28 +91,36 @@ nnoremap <c-s> :w<cr>
 
 noremap <C-down> :bprev<CR> 
 noremap <C-up> :bnext<CR> 
-noremap <C-S-Tab> :bprev<CR> 
-noremap <C-Tab> :bnext<CR> 
+noremap <C-S-Tab> :tabprevious<CR> 
+noremap <C-Tab> :tabnext<CR> 
 
 noremap <F8> :TagbarOpenAutoClose<CR>gg/
 
 nmap <silent> <F5> <Esc>:BufExplorer<cr>
 nmap <silent> <C-b> :BufExplorer<CR>
-nmap <silent> <C-m> :noh<CR>
+nmap <silent> <C-n> :NERDTreeToggle<CR>
 
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F6> :NERDTreeFind<cr>
 nnoremap <silent> <F7> :NERDTreeToggle<cr>
+nnoremap <silent> <Leader>n :NERDTreeToggle<cr>
+nnoremap <silent> <Leader>t :TagbarToggle<cr>
 
 nmap <C-A> za
 
+imap <C-x> <Esc>
+vmap <C-x> <Esc>
+cmap <C-x> <Esc>
+
 map <silent> <C-\> :TComment<cr>
-nmap <C-S-f> :Rgrep<Space>
+
+map <C-f> :Ack<Space>
+map <C-A-f> :RgrepAdd<Space>
 
 " autocomplete on C-Space
 imap <C-Space> <C-n>
 
-" useful to jump out of supplemented parenthesis or brackets
+" useful to jump out of complimented parenthesis or brackets
 imap <C-L> <End>
 
 " in visual mode d deletes without putting to a buffer
@@ -134,11 +142,17 @@ vnoremap <Space> :
 " in insert mode ctrl+backspace deletes previous word
 imap <C-BS> <C-W>
 
+imap <C-e> <C-r>+
+cmap <C-e> <C-r>+
+
 " in normal mode Enter inserts a blank line under cursor
 nnoremap <C-CR> m`o<Esc>``
 
 " in normal mode S-Enter inserts a blank line above cursor
 nnoremap <S-CR> m`O<Esc>``
+
+noremap - _
+noremap _ -
 
 " in insert mode C-Enter inserts a new line (emulating Enter keypress) and
 " goes to that line
@@ -147,6 +161,11 @@ imap <C-CR> <Esc>A<CR>
 map <C-Z> za
 
 nmap Y y$
+
+
+" add trailing comma - convenient when adding a method to a JS object
+map <Leader>, mxA,<Esc>`x
+imap <Leader>, <Esc>mxA,<Esc>`xa
 
 autocmd BufLeave * silent! wall
 au BufRead,BufNewFile *.hamlc set ft=haml
@@ -182,7 +201,7 @@ function! NERDTreeWinNum()
 endfunction
 
 " Edit vimrc
-map <Leader>ev :e $MYVIMRC<CR>
+map <Leader>ev :tabedit $MYVIMRC<CR>
 " Source vimrc
 map <Leader>sv :source $MYVIMRC<CR>
 
@@ -201,10 +220,18 @@ map <M-]> ]m
 map <M-p> :tag 
 map <M-c> :bd<CR>
 
-map <Leader>er :e config/routes.rb<CR>
+map <silent> mm :noh<CR>
+
+map <Leader>er :tabedit config/routes.rb<CR>
+map <Leader>es :tabedit db/schema.rb<CR>
+map <Leader>eg :tabedit Gemfile<CR>
+
+map <silent> <Leader>dd :!meld . &<CR>
 
 " continious windows
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
+map <Leader>yf :let @+ = expand("%")<CR>
 
 function! Strip(input_string)
   return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
@@ -213,7 +240,7 @@ endfunction
 function! EscapeSelectionToXReg()
   let @x = escape(Strip(@*), ' .()[]^+*?\')
 endfunction
-vmap <C-S-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Rgrep<Space><C-R>x
+vmap <C-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backspace><Backspace><Backspace>Ack <Space><C-R>x
 
 
 " returns true if is NERDTree open/active
@@ -233,5 +260,61 @@ function! rc:syncTree()
   endif
 endfunction
 autocmd BufEnter * call rc:syncTree()
+" autocmd TabEnter * redraw!
 
-let g:syntastic_enable_signs=1
+" let g:syntastic_enable_signs=1
+
+map <A-1> 1gt
+map <A-2> 2gt
+map <A-3> 3gt
+map <A-4> 4gt
+map <A-5> 5gt
+map <A-6> 6gt
+map <A-7> 7gt
+map <A-8> 8gt
+map <silent> <A-9> :tablast<CR>
+" map <silent> <C-A-w> :tabclose<CR>
+
+imap <A-1> <Esc>1gt
+imap <A-2> <Esc>2gt
+imap <A-3> <Esc>3gt
+imap <A-4> <Esc>4gt
+imap <A-5> <Esc>5gt
+imap <A-6> <Esc>6gt
+imap <A-7> <Esc>7gt
+imap <A-8> <Esc>8gt
+imap <silent> <A-9> <Esc>:tablast<CR>
+" inoremap <silent> <C-A-w> <Esc>:tabclose<CR>
+
+nnoremap <C-S-t> :tabnew<CR>
+inoremap <C-A-t> <Esc>:tabnew<CR>
+" inoremap <C-A-w> <Esc>:tabclose<CR>
+
+
+fu! SaveSess() 
+  execute 'mksession! ' . getcwd() . '/.session.vim' 
+endfunction 
+
+fu! RestoreSess() 
+if filereadable(getcwd() . '/.session.vim') 
+   execute 'so ' . getcwd() . '/.session.vim' 
+   if bufexists(1) 
+     for l in range(1, bufnr('$')) 
+       if bufwinnr(l) == -1 
+        exec 'sbuffer ' . l 
+       endif 
+     endfor 
+   endif 
+endif 
+syntax on 
+endfunction 
+
+autocmd VimLeave * call SaveSess() 
+" autocmd VimEnter * call RestoreSess()
+
+let g:tagbar_type_javascript = {
+    \ 'ctagsbin' : '/usr/local/bin/jsctags'
+\ }
+
+
+nmap <c-x>t <c-w><cr><c-w>T
