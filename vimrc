@@ -179,7 +179,9 @@ function! RenameFile()
     redraw!
   endif
 endfunction
-map <leader>r :call RenameFile()<cr>
+map <leader>rn :call RenameFile()<cr>
+
+map <leader>rd :redraw!<CR>
 
 "visual search mappings
 function! s:VSetSearch()
@@ -260,7 +262,7 @@ function! rc:syncTree()
   endif
 endfunction
 autocmd BufEnter * call rc:syncTree()
-" autocmd TabEnter * redraw!
+autocmd TabEnter * redraw!
 
 " let g:syntastic_enable_signs=1
 
@@ -317,4 +319,5 @@ let g:tagbar_type_javascript = {
 \ }
 
 
+" Quickfix window - open in new tab
 nmap <c-x>t <c-w><cr><c-w>T
