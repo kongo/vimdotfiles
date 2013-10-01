@@ -4,6 +4,8 @@
 call pathogen#infect()
 call pathogen#helptags()
 
+" let g:Powerline_symbols = 'fancy'
+
 source ~/.vim/bundle/snipmate-snippets/support_functions.vim
 
 set nocompatible                  " Must come first because it changes other options.
@@ -59,8 +61,9 @@ set foldenable
 set foldmethod=syntax
 
 set t_Co=256
-colorscheme level28
+colorscheme smyck
 set background=dark
+set linespace=1
 
 set tabstop=2                    " Global tab width.
 set shiftwidth=2                 " And again, related.
@@ -83,23 +86,23 @@ set undoreload=10000        " number of lines to save for undo
 " Connect the default register with the system clipboard
 set clipboard=unnamedplus
 
+nnoremap j gj
+nnoremap k gk
+
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-nnoremap <c-s> :w<cr>
 
-noremap <C-down> :bprev<CR> 
-noremap <C-up> :bnext<CR> 
 noremap <C-S-Tab> :tabprevious<CR> 
 noremap <C-Tab> :tabnext<CR> 
 
 noremap <F8> :TagbarOpenAutoClose<CR>gg/
 
-nmap <silent> <F5> <Esc>:BufExplorer<cr>
 nmap <silent> <C-b> :BufExplorer<CR>
 nmap <silent> <C-n> :NERDTreeToggle<CR>
 
+map <F4> :bd<CR>
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F6> :NERDTreeFind<cr>
 nnoremap <silent> <F7> :NERDTreeToggle<cr>
@@ -107,6 +110,10 @@ nnoremap <silent> <Leader>n :NERDTreeToggle<cr>
 nnoremap <silent> <Leader>t :TagbarToggle<cr>
 
 nmap <C-A> za
+
+imap <C-c> <Esc>
+vmap <C-c> <Esc>
+cmap <C-c> <Esc>
 
 imap <C-x> <Esc>
 vmap <C-x> <Esc>
@@ -139,9 +146,7 @@ nnoremap <expr> <silent> <S-F3> (&diff ? "[c" : ":cprev\<CR>")
 nnoremap <Space> :
 vnoremap <Space> :
 
-" in insert mode ctrl+backspace deletes previous word
-imap <C-BS> <C-W>
-
+imap <C-b> <C-r>+
 imap <C-e> <C-r>+
 cmap <C-e> <C-r>+
 
@@ -158,10 +163,10 @@ noremap _ -
 " goes to that line
 imap <C-CR> <Esc>A<CR>
 
-map <C-Z> za
-
 nmap Y y$
 
+nmap <C-x> "_d
+vmap <C-x> "_d
 
 " add trailing comma - convenient when adding a method to a JS object
 map <Leader>, mxA,<Esc>`x
@@ -223,12 +228,13 @@ map <M-p> :tag
 map <M-c> :bd<CR>
 
 map <silent> mm :noh<CR>
+map <silent> cc :cclose<CR>
 
 map <Leader>er :tabedit config/routes.rb<CR>
 map <Leader>es :tabedit db/schema.rb<CR>
 map <Leader>eg :tabedit Gemfile<CR>
 
-map <silent> <Leader>dd :!meld . &<CR>
+map <silent> <Leader>dd :!meld . &<CR><CR>
 
 " continious windows
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
@@ -262,7 +268,7 @@ function! rc:syncTree()
   endif
 endfunction
 autocmd BufEnter * call rc:syncTree()
-autocmd TabEnter * redraw!
+" autocmd TabEnter * redraw!
 
 " let g:syntastic_enable_signs=1
 
@@ -311,7 +317,7 @@ endif
 syntax on 
 endfunction 
 
-autocmd VimLeave * call SaveSess() 
+" autocmd VimLeave * call SaveSess() 
 " autocmd VimEnter * call RestoreSess()
 
 let g:tagbar_type_javascript = {
@@ -321,3 +327,43 @@ let g:tagbar_type_javascript = {
 
 " Quickfix window - open in new tab
 nmap <c-x>t <c-w><cr><c-w>T
+
+
+" CtrlP custom matcher
+"
+" let g:path_to_matcher = "matcher"
+" 
+" let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+" 
+" let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+" 
+" function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+" 
+"   " Create a cache file if not yet exists
+"   let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+"   if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+"     call writefile(a:items, cachefile)
+"   endif
+"   if !filereadable(cachefile)
+"     return []
+"   endif
+" 
+"   " a:mmode is currently ignored. In the future, we should probably do
+"   " something about that. the matcher behaves like "full-line".
+"   let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
+"   if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+"     let cmd = cmd.'--no-dotfiles '
+"   endif
+"   let cmd = cmd.a:str
+" 
+"   return split(system(cmd), "\n")
+" 
+" endfunction
+set wildignore+=*/doc/*
+
+
+" Don't screw up folds when inserting text that might affect them, until
+" leaving insert mode. Foldmethod is local to the window. Protect against
+" screwing up folding when switching between windows.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
