@@ -1,7 +1,7 @@
 " Example Vim graphical configuration.
 " Copy to ~/.gvimrc or ~/_gvimrc.
 
-set guifont=Monaco\ 10             " Font family and font size.
+set guifont=DejaVu\ Sans\ Mono\ 10             " Font family and font size.
 set encoding=utf-8                " Use UTF-8 everywhere.
 set guioptions-=T                 " Hide toolbar.
 set guioptions+=c                 " Use console dialogs
@@ -14,4 +14,4 @@ set nocursorline
 set t_vb=
 set autowrite
 au FocusLost * silent! wa
-
+set linespace=1
