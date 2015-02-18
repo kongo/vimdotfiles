@@ -10,7 +10,9 @@ source ~/.vim/bundle/snipmate-snippets/support_functions.vim
 
 set nocompatible                  " Must come first because it changes other options.
 
-let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
+" let g:ackprg="ack-grep -H --nocolor --nogroup --column --smart-case"
+" ag = silver searcher
+let g:ackprg="ag --nocolor --nogroup --column --smart-case"
 let Grep_Default_Options='-i'
 let Grep_Skip_Dirs='tmp log'
 
@@ -102,10 +104,10 @@ noremap <F8> :TagbarOpenAutoClose<CR>gg/
 nmap <silent> <C-b> :BufExplorer<CR>
 nmap <silent> <C-n> :NERDTreeToggle<CR>
 
-map <F4> :bd<CR>
 nnoremap <F2> :w<CR><Esc>
 nnoremap <silent> <F6> :NERDTreeFind<cr>
-nnoremap <silent> <F7> :NERDTreeToggle<cr>
+" Use <C-n> instead!
+" nnoremap <silent> <F7> :NERDTreeToggle<cr>
 nnoremap <silent> <Leader>n :NERDTreeToggle<cr>
 nnoremap <silent> <Leader>t :TagbarToggle<cr>
 
@@ -236,6 +238,9 @@ map <Leader>eg :tabedit Gemfile<CR>
 
 map <silent> <Leader>dd :!meld . &<CR><CR>
 
+map <A-j> :tabm -1<CR>
+map <A-k> :tabm +1<CR>
+
 " continious windows
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
@@ -320,9 +325,9 @@ endfunction
 " autocmd VimLeave * call SaveSess() 
 " autocmd VimEnter * call RestoreSess()
 
-let g:tagbar_type_javascript = {
-    \ 'ctagsbin' : '/usr/local/bin/jsctags'
-\ }
+" let g:tagbar_type_javascript = {
+"     \ 'ctagsbin' : '/usr/local/bin/jsctags'
+" \ }
 
 
 " Quickfix window - open in new tab
@@ -360,6 +365,7 @@ nmap <c-x>t <c-w><cr><c-w>T
 " 
 " endfunction
 set wildignore+=*/doc/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 
 " Don't screw up folds when inserting text that might affect them, until
@@ -367,3 +373,23 @@ set wildignore+=*/doc/*
 " screwing up folding when switching between windows.
 autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
 autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+
+map <silent> <Leader>th :Tab/\w:\zs/l0l1<CR>
+
+
+nnoremap <silent> zj :call NextClosedFold('j')<cr>
+nnoremap <silent> zk :call NextClosedFold('k')<cr>
+function! NextClosedFold(dir)
+    let cmd = 'norm!z' . a:dir
+    let view = winsaveview()
+    let [l0, l, open] = [0, view.lnum, 1]
+    while l != l0 && open
+        exe cmd
+        let [l0, l] = [l, line('.')]
+        let open = foldclosed(l) < 0
+    endwhile
+    if open
+        call winrestview(view)
+    endif
+endfunction
