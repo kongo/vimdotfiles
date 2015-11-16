@@ -63,7 +63,8 @@ set foldenable
 set foldmethod=syntax
 
 set t_Co=256
-colorscheme smyck
+colorscheme base16-atelierforest
+" let g:airline_powerline_fonts = 1
 set background=dark
 set linespace=1
 
@@ -257,22 +258,22 @@ vmap <C-f> :<C-u>call EscapeSelectionToXReg()<cr>gv:<Backspace><Backspace><Backs
 
 
 " returns true if is NERDTree open/active
-function! rc:isNTOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" returns true if focused window is NERDTree window
-function! rc:isNTFocused()
-  return -1 != match(expand('%'), 'NERD_Tree')
-endfunction
-
-function! rc:syncTree()
-  if &modifiable && rc:isNTOpen() && !rc:isNTFocused() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-autocmd BufEnter * call rc:syncTree()
+" function! rc:isNTOpen()
+"   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
+"
+" " returns true if focused window is NERDTree window
+" function! rc:isNTFocused()
+"   return -1 != match(expand('%'), 'NERD_Tree')
+" endfunction
+"
+" function! rc:syncTree()
+"   if &modifiable && rc:isNTOpen() && !rc:isNTFocused() && strlen(expand('%')) > 0 && !&diff
+"     NERDTreeFind
+"     wincmd p
+"   endif
+" endfunction
+" autocmd BufEnter * call rc:syncTree()
 " autocmd TabEnter * redraw!
 
 " let g:syntastic_enable_signs=1
@@ -393,3 +394,4 @@ function! NextClosedFold(dir)
         call winrestview(view)
     endif
 endfunction
+
