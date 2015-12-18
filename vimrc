@@ -365,7 +365,6 @@ nmap <c-x>t <c-w><cr><c-w>T
 "   return split(system(cmd), "\n")
 " 
 " endfunction
-set wildignore+=*/doc/*
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 

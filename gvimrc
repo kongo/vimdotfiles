@@ -7,6 +7,7 @@ set guioptions-=T                 " Hide toolbar.
 set guioptions+=c                 " Use console dialogs
 set guioptions-=m                 " Hide menu.
 set guioptions-=r
+set guioptions-=L
 set guioptions-=e
 set background=dark               " Background.
 "set lines=25 columns=100         " Window dimensions.
